@@ -4,15 +4,21 @@ const connection = require('../configs/db')
 
 exports.insertProduct = (data) => {
     return new Promise((resolve, reject) => {
-        connection.query("INSERT INTO product SET ?", data, (err, result) => {
-            if (!err) {
-                resolve(result);
+        connection.query("SELECT * FROM product WHERE nameProduct = ?", data.nameProduct, (err, result) => {
+            if (result.length > 0) {
+                reject(new Error("Name has been registered"));
             } else {
-                console.log(err);
-                reject(new Error("Internal server error"));
+                connection.query("INSERT INTO product SET ?", data, (err, result) => {
+                    if (!err) {
+                        resolve(result);
+                    } else {
+                        console.log(err);
+                        reject(new Error("Internal server error"));
+                    }
+                });
             }
-        });
-    });
+        })
+    })
 };
 
 exports.getAllProduct = (queryPage, queryPerPage, keyword, sortBy, order) => {
@@ -49,17 +55,17 @@ exports.getAllProduct = (queryPage, queryPerPage, keyword, sortBy, order) => {
 };
 
 
-exports.getProduct = () => {
-    return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM product', (err, results) => {
-            if (!err) {
-                resolve(results)
-            } else {
-                reject(new Error("Internal server error"));
-            }
-        })
-    })
-};
+// exports.getProduct = () => {
+//     return new Promise((resolve, reject) => {
+//         connection.query('SELECT * FROM product', (err, results) => {
+//             if (!err) {
+//                 resolve(results)
+//             } else {
+//                 reject(new Error("Internal server error"));
+//             }
+//         })
+//     })
+// };
 
 exports.getProductId = (id) => {
     return new Promise((resolve, reject) => {
@@ -87,26 +93,32 @@ exports.deleteProduct = (id) => {
 
 exports.updateProduct = (id, data) => {
     return new Promise((resolve, reject) => {
-        connection.query(
-            "UPDATE product SET ? WHERE id = ?",
-            [data, id],
-            (err, result) => {
-                if (!err) {
-                    connection.query(
-                        "SELECT * FROM product WHERE id = ?",
-                        id,
-                        (err, result) => {
-                            if (!err) {
-                                resolve(result);
-                            } else {
-                                reject(new Error("Internal server error"));
-                            }
+        connection.query("SELECT * FROM product WHERE nameProduct = ?", data.nameProduct, (err, result) => {
+            if (result.length > 0) {
+                reject(new Error("Name has been registered"));
+            } else {
+                connection.query(
+                    "UPDATE product SET ? WHERE id = ?",
+                    [data, id],
+                    (err, result) => {
+                        if (!err) {
+                            connection.query(
+                                "SELECT * FROM product WHERE id = ?",
+                                id,
+                                (err, result) => {
+                                    if (!err) {
+                                        resolve(result);
+                                    } else {
+                                        reject(new Error("Internal server error"));
+                                    }
+                                }
+                            );
+                        } else {
+                            reject(new Error("Internal server error"));
                         }
-                    );
-                } else {
-                    reject(new Error("Internal server error"));
-                }
+                    }
+                );
             }
-        );
+        })
     });
 };

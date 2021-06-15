@@ -12,11 +12,23 @@ exports.insertProduct = async (req, res) => {
             stock,
             image: `images\\${req.file.filename}`,
         }
-        productModels.insertProduct(data).then(() => {
-            helper(res, 200, true, "Create Product Success")
-        })
+        productModels.insertProduct(data)
+            .then(() => {
+                helper(res, 200, true, "Create Product Success")
+            })
+            .catch((err) => {
+                if (err.message === "Name has been registered") {
+                    helper(res, 400, false, err.message);
+                } else {
+                    helper(res, 500, false, err.message);
+                }
+            })
     } catch (error) {
-        return helper(res, 400, false, 'Bad Request')
+        if (error.message === "Name has been registered") {
+            helper(res, 400, false, error.message);
+        } else {
+            helper(res, 500, false, error.message);
+        }
     }
 }
 
@@ -60,16 +72,16 @@ exports.findAll = (req, res) => {
 
 
 
-exports.getProduct = (req, res) => {
-    productModels.getProduct()
-        .then((result) => {
-            if (result.length > 0) {
-                helper(res, 200, true, `Product ${result.length} Found`, result)
-            } else {
-                helper(res, 400, false, 'Product Not Found')
-            }
-        })
-}
+// exports.getProduct = (req, res) => {
+//     productModels.getProduct()
+//         .then((result) => {
+//             if (result.length > 0) {
+//                 helper(res, 200, true, `Product ${result.length} Found`, result)
+//             } else {
+//                 helper(res, 400, false, 'Product Not Found')
+//             }
+//         })
+// }
 
 exports.delete = (req, res) => {
     const id = req.params.id;
