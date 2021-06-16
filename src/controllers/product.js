@@ -139,7 +139,7 @@ exports.update = async (req, res) => {
             return productModels.updateProduct(id, data);
         })
         .then((result) => {
-            helper(res, 200, "Users has been updated", result);
+            helper(res, 200, "Product has been updated", result);
         })
         .catch((err) => {
             if (err.message === "Internal server error") {
