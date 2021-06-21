@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 15 Jun 2021 pada 10.43
--- Versi server: 10.4.17-MariaDB
--- Versi PHP: 8.0.1
+-- Host: localhost:3306
+-- Generation Time: Jun 21, 2021 at 02:05 PM
+-- Server version: 10.3.29-MariaDB-log-cll-lve
+-- PHP Version: 7.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `nutech`
+-- Database: `projec58_nutech`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
@@ -37,32 +38,33 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `product`
+-- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`id`, `nameProduct`, `purchasePrice`, `sellingPrice`, `stock`, `image`) VALUES
-(15, 'Jas Formal', 30000, 35000, 30, 'images\\1623743787931-31Ik+SM+oaL.jpg'),
-(16, 'Jas Formals', 25000, 30000, 20, 'images\\1623745140587-tie_1.jpg');
+(17, 'Mini Drone', 14000000, 12000000, 12, 'images\\1624250707700-mini_drone (1).png'),
+(18, 'Phantom Drone', 13000000, 12000000, 14, 'images\\1624250751613-phantom_drone 1 (1).png'),
+(24, 'Light Drones', 13000000, 12000000, 25, 'images\\1624258171968-drone_light.png');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `product`
+-- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
